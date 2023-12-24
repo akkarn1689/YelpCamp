@@ -1,0 +1,91 @@
+<% layout('layouts/boilerplate') %>
+    <div class="row">
+        <h1 class="text-center">Edit Campground</h1>
+        <div class="col-6 offset-3">
+            <form action="/campgrounds/<%= campground._id %>?_method=PUT" method="post" novalidate
+                class="validated-form" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label class="form-label" for="title">Title</label>
+                    <input class="form-control" type="text" id="title" name="campground[title]"
+                        value="<%= campground.title %>" required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                    <div class="invalid-feedback">
+                        Please provide Campground title!
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="location">Location</label>
+                    <input class="form-control" type="text" id="location" name="campground[location]"
+                        value="<%= campground.location %>" required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                    <div class="invalid-feedback">
+                        Please provide Campground location!
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="price">Campground Price</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="price-label">$</span>
+                        </div>
+                        <input type="text" class="form-control" id="price" placeholder="0.00" aria-label="price"
+                            aria-describedby="price-label" name="campground[price]" value="<%= campground.price %>"
+                            required>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                        <div class="invalid-feedback">
+                            Please provide Campground price!
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="description">Description</label>
+                    <textarea class="form-control" type="text" id="description" name="campground[description]"
+                        name="campground[description]" required><%= campground.description %> </textarea>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                    <div class="invalid-feedback">
+                        Please provide Campground description!
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <!-- Number of images that can be uploaded should be limited (with server side or client side validations) -->
+                    <!-- Name of selected files should be shown -->
+                    <label for="images" class="form-label">Add more image(s)...</label>
+                    <input class="form-control" type="file" id="images" name="images" multiple>
+                </div>
+
+                <div class="mb-3">
+                    <label for="image-delete-section" class="mb-3">Select images you want to delete!</label>
+                    <div class="m-3 d-flex flex-row justify-content-start" id="image-delete-section">
+                        <% campground.images.map((img, i)=> { %>
+                            <!-- <div class="border rounded"> -->
+                            <div class="form-check-inline m-3">
+                                <input type="checkbox" name="deleteImages[]" id="image-<%=i%>"
+                                    value="<%=img.filename%>">
+                            </div>
+                            <img crossorigin="anonymous" src="<%=img.thumbnail%>" alt="" class="img-thumbnail" width="100" height="80">
+                            <!-- Instead of using custom width & height use image transformation api of cloudinary -->
+                            <!-- </div> -->
+                            <% }) %>
+
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <button class="btn btn-info">Update Campground</button>
+                </div>
+            </form>
+            <a class="btn btn-primary" href="/campgrounds/<%= campground._id %>">Back To Campground</a>
+        </div>
+    </div>
